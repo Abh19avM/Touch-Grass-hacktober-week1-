@@ -1,0 +1,328 @@
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  --font-serif: 'Newsreader', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* Lush Sahyadri & Pune Earth Palette: Banyan Green, Red Murrum Earth, Gulmohar Scarlet, Karvi Violet */
+  --bg-deep: #0e1711;
+  --bg-surface: #142218;
+  --bg-card: #192a1f;
+  --bg-card-hover: #203527;
+  --bg-elevated: #263d2f;
+  
+  --border-subtle: rgba(220, 210, 195, 0.12);
+  --border-card: rgba(220, 210, 195, 0.16);
+  --border-active: #c85a32;
+  
+  --color-terracotta: #c85a32;
+  --color-terracotta-hover: #d96940;
+  --color-clay-soft: #e58b68;
+  --color-ochre: #d4973b;
+  --color-ochre-light: #f59e0b;
+  --color-moss: #2e7d32;
+  --color-moss-light: #4ade80;
+  --color-spruce: #1b5e20;
+  --color-lichen: #86efac;
+  --color-karvi: #a855f7;
+  --color-gulmohar: #e11d48;
+
+  --text-parchment: #f7f4ed;
+  --text-stone: #cbd5e1;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+  
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 18px;
+  --radius-full: 9999px;
+
+  --shadow-subtle: 0 4px 16px rgba(0, 0, 0, 0.35);
+  --shadow-card: 0 8px 24px -4px rgba(0, 0, 0, 0.45);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-deep);
+  color: var(--text-parchment);
+  min-height: 100vh;
+  line-height: 1.55;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Organic Topographic Map & Foliage Ambient Texture */
+.nature-ambient-bg {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: 
+    radial-gradient(circle at 10% 15%, rgba(46, 125, 50, 0.08) 0%, transparent 45%),
+    radial-gradient(circle at 85% 25%, rgba(200, 90, 50, 0.06) 0%, transparent 40%),
+    radial-gradient(circle at 50% 85%, rgba(225, 29, 72, 0.05) 0%, transparent 55%),
+    url("data:image/svg+xml,%3Csvg width='120' height='120' viewBox='0 0 120 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 60 Q 30 50, 60 60 T 120 60 M0 30 Q 30 20, 60 30 T 120 30 M0 90 Q 30 80, 60 90 T 120 90' stroke='rgba(255,255,255,0.02)' fill='none' stroke-width='1'/%3E%3C/svg%3E");
+  background-attachment: fixed;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-deep);
+}
+::-webkit-scrollbar-thumb {
+  background: #25422d;
+  border-radius: var(--radius-full);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #33593e;
+}
+
+/* Typography */
+h1, h2, h3, .font-serif {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.mono {
+  font-family: var(--font-mono);
+}
+
+/* Field Notebook & Trail Card Surfaces */
+.trail-card-surface {
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-subtle);
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+.trail-card-surface:hover {
+  background: var(--bg-card-hover);
+  border-color: rgba(220, 210, 195, 0.25);
+}
+
+/* Leaflet Container Styling */
+.leaflet-container {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background: #142218 !important;
+  font-family: var(--font-sans) !important;
+}
+
+.leaflet-popup-content-wrapper {
+  background: #192a1f !important;
+  color: var(--text-parchment) !important;
+  border: 1px solid rgba(220, 210, 195, 0.25) !important;
+  border-radius: var(--radius-sm) !important;
+  box-shadow: var(--shadow-card) !important;
+  padding: 4px 6px;
+}
+
+.leaflet-popup-tip {
+  background: #192a1f !important;
+}
+
+/* Pulsing Runner on Trail */
+.runner-pulsing-marker {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  background: #22c55e;
+  border-radius: 50%;
+  border: 2.5px solid #ffffff;
+  box-shadow: 0 0 12px rgba(34, 197, 94, 0.7);
+}
+
+.runner-pulsing-marker::after {
+  content: '';
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  right: -6px;
+  bottom: -6px;
+  border-radius: 50%;
+  background: rgba(34, 197, 94, 0.4);
+  animation: runnerPulse 2s infinite ease-out;
+}
+
+@keyframes runnerPulse {
+  0% { transform: scale(0.8); opacity: 1; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+/* Tactile Natural Buttons */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #c85a32;
+  color: #ffffff;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.88rem;
+  padding: 9px 18px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
+  transition: all 0.18s ease;
+  box-shadow: 0 2px 8px rgba(200, 90, 50, 0.25);
+}
+
+.btn-primary:hover {
+  background: var(--color-terracotta-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(200, 90, 50, 0.35);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: rgba(244, 240, 234, 0.05);
+  color: var(--text-parchment);
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 0.85rem;
+  padding: 8px 15px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-card);
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.btn-secondary:hover {
+  background: rgba(244, 240, 234, 0.09);
+  border-color: rgba(244, 240, 234, 0.25);
+}
+
+.btn-moss {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: #2e7d32;
+  color: #ffffff;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 0.85rem;
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(74, 222, 128, 0.3);
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.btn-moss:hover {
+  background: #388e3c;
+  color: #ffffff;
+}
+
+/* Field Guide Tag Badges */
+.badge-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.badge-peak {
+  background: rgba(200, 90, 50, 0.22);
+  color: #fca5a5;
+  border: 1px solid rgba(200, 90, 50, 0.4);
+}
+
+.badge-near-peak {
+  background: rgba(212, 151, 59, 0.22);
+  color: #fde047;
+  border: 1px solid rgba(212, 151, 59, 0.4);
+}
+
+.badge-turning {
+  background: rgba(46, 125, 50, 0.22);
+  color: #86efac;
+  border: 1px solid rgba(46, 125, 50, 0.4);
+}
+
+/* ========================================================
+   CURSOR FOLLOWER ANIMATIONS (BUTTERFLY & HONEYBEE)
+   ======================================================== */
+
+/* 3D Butterfly Flapping Wings */
+.butterfly-3d-wrap {
+  perspective: 600px;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.45));
+}
+
+.wing-left {
+  animation: flapLeft 0.32s ease-in-out infinite alternate;
+  transform-style: preserve-3d;
+}
+
+.wing-right {
+  animation: flapRight 0.32s ease-in-out infinite alternate;
+  transform-style: preserve-3d;
+}
+
+@keyframes flapLeft {
+  0% { transform: rotateY(0deg); }
+  100% { transform: rotateY(-65deg); }
+}
+
+@keyframes flapRight {
+  0% { transform: rotateY(0deg); }
+  100% { transform: rotateY(65deg); }
+}
+
+/* Honeybee Buzzing & Wing Vibration */
+.bee-wings-anim {
+  animation: beeWingBuzz 0.08s ease-in-out infinite alternate;
+  transform-origin: 40px 22px;
+}
+
+@keyframes beeWingBuzz {
+  0% { transform: scaleY(1) rotate(0deg); opacity: 0.85; }
+  100% { transform: scaleY(0.65) rotate(6deg); opacity: 0.55; }
+}
+
+/* Sparkle Pollen Dust Particles */
+.pollen-sparkle {
+  pointer-events: none;
+  animation: pollenFade 0.85s ease-out forwards;
+}
+
+@keyframes pollenFade {
+  0% { transform: scale(1); opacity: 0.85; }
+  100% { transform: scale(0.2) translateY(8px); opacity: 0; }
+}
+
+/* App container */
+.app-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 24px 28px 12px;
+  position: relative;
+  z-index: 2;
+}
+
+@media (max-width: 768px) {
+  .app-container {
+    padding: 14px 16px 8px;
+  }
+}
